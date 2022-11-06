@@ -1,0 +1,16 @@
+#map {
+  width: 100% !important;
+  height: 100% !important;
+  background-color: #f6f6f4;
+}
+
+ion-button {
+  --color: #fff;
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: 98%;
+  --border-radius: 10px
+}

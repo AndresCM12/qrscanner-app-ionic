@@ -1,6 +1,14 @@
 {
-	"appId": "io.ionic.starter",
+	"appId": "io.ionic.qrScanner",
 	"appName": "qrScanner",
 	"webDir": "www",
-	"bundledWebRuntime": false
+	"bundledWebRuntime": false,
+  "backgroundColor": "#121212",
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": true,
+      "hideDuration": 0,
+      "backgroundColor": "#121212"
+    }
+  }
 }

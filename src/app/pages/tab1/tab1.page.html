@@ -1,0 +1,74 @@
+<ion-content
+  mode="ios"
+  [fullscreen]="true"
+  [style.--background]="scanActive ? '#00000000 !important' : ''"
+>
+  <ion-header collapse="condense" *ngIf="!scanActive">
+    <ion-toolbar>
+      <ion-title size="large"></ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="scanActive" id="scannerDetector">
+    <div id="scannerBar"></div>
+    <p>Place the code inside the frame</p>
+  </div>
+  <!-- <ion-button
+    *ngIf="!scanActive"
+    (click)="scannQR()"
+    expand="block"
+    fill="clear"
+    shape="round"
+  >
+    Scann qr
+  </ion-button>
+  <ion-button (click)="onClick()" expand="block" fill="clear" shape="round">
+    Open link
+  </ion-button> -->
+  <p class="ion-text-center" *ngIf="result && !scanActive">{{result}}</p>
+  <ion-modal
+    #modal
+    mode="ios"
+    [initialBreakpoint]="0.65"
+    [breakpoints]="[0, 0.65]"
+    (willDismiss)="onDismiss()"
+  >
+    <ng-template>
+      <ion-content class="ion-margin-vertical">
+        <ion-text class="ion-margin ion-text-center">
+          <h3>Your result</h3>
+        </ion-text>
+        <div id="resultWraper">
+          <div class="icon-wrapper">
+            <ion-icon
+              [name]="nuevoRegistro.icon"
+              size="large"
+              class="ion-margin-vertical"
+            ></ion-icon>
+          </div>
+
+          <ion-label class="ion-text-center ion-margin-vertical">
+            <h2> {{nuevoRegistro.content}} </h2>
+            <p style="font-style: italic">
+              {{nuevoRegistro.created | date: 'EEEE h:mm a, dd/m/yyyy' }}
+            </p>
+            <h3 style="font-weight: bold">{{nuevoRegistro.textType}}</h3>
+          </ion-label>
+          <ion-button
+            (click)="openResource()"
+            expand="block"
+            class="ion-margin"
+            shape="round"
+          >
+            Open
+          </ion-button>
+
+          <h6>
+            Always remember to verify the security of a link before accessing it
+          </h6>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

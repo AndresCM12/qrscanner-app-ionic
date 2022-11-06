@@ -1,0 +1,83 @@
+ion-content{
+  height: 100px;
+  background-color: #00000000 !important;
+}
+#scannerDetector {
+  border: 4px whitesmoke solid;
+  border-radius: 10px;
+  width: 60vw;
+  height: 60vw;
+  transition: all 0.5s ease-in-out;
+  position: absolute;
+  left: calc(50% - 30vw - 2px);
+  bottom: calc(55% - 30vw - 2px);
+  background-color: #00000000 !important;
+  #scannerBar {
+    height: 4px;
+    width: 50vw;
+    position: absolute;
+    left: calc(50% - 25vw);
+    top: (5px);
+    background-color: var(--ion-color-primary);
+    border-radius: 10px;
+    animation: scannerBarAnimation 5s infinite;
+  }
+  p {
+    color: white;
+    position: absolute;
+    bottom: -40px;
+    font-size: 12px;
+    text-align: center;
+    left: calc(50% - 82px);
+  }
+}
+#resultWraper {
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  h2 {
+    font-weight: bold;
+    max-width: 390px;
+    justify-content: center;
+    margin-inline: auto;
+  }
+  h2,
+  h3,
+  p {
+    margin-block: 8px;
+  }
+  h6 {
+    font-size: 12px;
+    text-align: center;
+    max-width: 50%;
+  }
+  ion-icon {
+    color: var(--ion-color-primary);
+  }
+  ion-button {
+    width: 100%;
+    max-width: 70%;
+    font-weight: bold;
+  }
+
+  .icon-wrapper {
+    display: grid;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+  }
+}
+@keyframes scannerBarAnimation {
+  0% {
+    transform: translateY(5px);
+  }
+  50% {
+    transform: translateY(55vw);
+  }
+  100% {
+    transform: translateY(5px);
+  }
+}
