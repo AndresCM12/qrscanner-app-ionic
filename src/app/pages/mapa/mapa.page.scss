@@ -1,7 +1,7 @@
 #map {
   width: 100% !important;
   height: 100% !important;
-  background-color: #f6f6f4;
+  background-color: white;
 }
 
 ion-button {
@@ -12,5 +12,21 @@ ion-button {
   transform: translateX(-50%);
   z-index: 10;
   width: 98%;
-  --border-radius: 10px
+  --border-radius: 10px;
+}
+
+ion-spinner {
+  --color: var(--ion-color-primary);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+ion-modal{
+  --background: #fff;
+  ion-toolbar{
+    --background: #fff;
+    margin-top: 16px;
+  }
 }

@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
 import { Injectable } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { Registro } from '../models/registro.model';
 import { Browser } from '@capacitor/browser';
@@ -40,16 +39,15 @@ export class DataLocalService {
     });
   }
 
-  async abrirRegistro(content, type) {
-    //this.navCtrl.navigateForward('/tabs/tab2');
-    console.log(content, '------ registro from abrir registro ------');
+  async abrirRegistro(content, type, fullRegister) {
+    const fullRegisterDecoded = JSON.stringify(fullRegister);
     switch (type) {
       case 'http':
         await Browser.open({ url: content });
         break;
       case 'geo':
         this.router.navigate(['tabs', 'tab2', 'mapa'], {
-          state: { geo: content },
+          state: { geo: content, fullRegister: fullRegisterDecoded },
         });
     }
   }

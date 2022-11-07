@@ -13,12 +13,16 @@ export class Tab2Page {
     BarcodeScanner.stopScan();
   }
   enviarCorreo() {}
+
   abrirRegistro(registro: Registro) {}
-  favorite(registro) {
+
+  deleteIteme(registro) {
     this.dataLocal.deleteRegister(registro.created);
   }
+
   share() {}
-  onOpenModal(registro: Registro) {
-    this.dataLocal.abrirRegistro(registro.content, registro.type);
+
+  openItem(registro: Registro) {
+    this.dataLocal.abrirRegistro(registro.content, registro.type, registro);
   }
 }

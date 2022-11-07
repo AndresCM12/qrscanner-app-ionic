@@ -1,12 +1,7 @@
-import {
-  AfterContentInit,
-  AfterViewInit,
-  Component,
-  OnChanges,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { IonModal, ModalController } from '@ionic/angular';
 
 declare let mapboxgl: any;
 
@@ -16,14 +11,21 @@ declare let mapboxgl: any;
   styleUrls: ['./mapa.page.scss'],
 })
 export class MapaPage implements OnInit {
+  @ViewChild('modal') modal: IonModal;
   lat: number;
   lng: number;
+  mapIsLoading = true;
+  register;
+
   constructor(private navRouter: Router) {}
 
   async ngOnInit() {
     BarcodeScanner.stopScan();
 
     const data: any = this.navRouter.getCurrentNavigation().extras.state.geo;
+    this.register = JSON.parse(
+      this.navRouter.getCurrentNavigation().extras.state.fullRegister
+    );
     const geo = data.substring(4);
     const geoArray = geo.split(',');
 
@@ -31,12 +33,13 @@ export class MapaPage implements OnInit {
     this.lng = Number(geoArray[1].substring(0, 18));
     this.loadMap();
   }
+
   loadMap() {
-    console.log(' ------- cargando mapa -------');
     mapboxgl.accessToken =
       'pk.eyJ1IjoibWFsdGhlYWRhIiwiYSI6ImNsNmxqNnd5ejAzZXAzcXV4NXRxcXQ4eTUifQ.vndUP9Cmdl9FeXQSKtL_wA';
+
     const map = new mapboxgl.Map({
-      style: 'mapbox://styles/mapbox/light-v10',
+      style: 'mapbox://styles/maltheada/cla5ymd9r003415rtrr1p6tib',
       center: [this.lng, this.lat],
       zoom: 15.5,
       pitch: 45,
@@ -48,18 +51,26 @@ export class MapaPage implements OnInit {
     map.on('load', () => {
       // Insert the layer beneath any symbol layer.
       map.resize();
-
+      const customMarker = this.createCustomMarker();
       //marker
-      new mapboxgl.Marker().setLngLat([this.lng, this.lat]).addTo(map);
+      const marker = new mapboxgl.Marker({
+        color: '#7974ff',
+        anchor: 'bottom',
+        element: customMarker,
+      })
+        .setLngLat([this.lng, this.lat])
+        .addTo(map);
+
+      marker.getElement().addEventListener('click', () => {
+        this.markerClicked();
+      });
 
       const layers = map.getStyle().layers;
+
       const labelLayerId = layers.find(
         (layer) => layer.type === 'symbol' && layer.layout['text-field']
       ).id;
 
-      // The 'building' layer in the Mapbox Streets
-      // vector tileset contains building height data
-      // from OpenStreetMap.
       map.addLayer(
         {
           id: 'add-3d-buildings',
@@ -97,11 +108,29 @@ export class MapaPage implements OnInit {
         },
         labelLayerId
       );
+
+      this.mapIsLoading = false;
     });
   }
+
   goBack() {
     this.lat = 0;
     this.lng = 0;
     this.navRouter.navigate(['tabs', 'tab2']);
+  }
+
+  async markerClicked() {
+    this.modal.present();
+    console.log('Marker clicked');
+  }
+
+  createCustomMarker() {
+    const customMarker = document.createElement('div');
+    customMarker.style.backgroundImage = 'url(../../../assets/images/pin.svg)';
+    customMarker.style.backgroundSize = 'cover';
+    customMarker.style.backgroundPosition = 'center';
+    customMarker.style.width = '27px';
+    customMarker.style.height = '41px';
+    return customMarker;
   }
 }

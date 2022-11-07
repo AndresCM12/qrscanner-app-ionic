@@ -29,14 +29,15 @@ export class Tab1Page implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     BarcodeScanner.prepare();
   }
+
   ngOnDestroy() {
     this.stopScanner();
     BarcodeScanner.stopScan();
   }
+
   async ngOnInit() {
     this.startScanner();
     const torch = await BarcodeScanner.getTorchState();
-    console.log(torch, '-------- torch ---------');
   }
 
   scannQR() {
@@ -61,6 +62,7 @@ export class Tab1Page implements OnInit, AfterViewInit, OnDestroy {
       }
     }
   }
+
   async checkPermission() {
     return new Promise(async (resolve, reject) => {
       const status = await BarcodeScanner.checkPermission({ force: true });
@@ -81,25 +83,32 @@ export class Tab1Page implements OnInit, AfterViewInit, OnDestroy {
             },
           ],
         });
+
+        await alert.present();
       } else {
         resolve(false);
       }
     });
   }
+
   stopScanner() {
     BarcodeScanner.stopScan();
     this.scanActive = false;
   }
+
   onClick() {
     this.modal.present();
   }
+
   openResource() {
     this.modal.dismiss();
     this.dataLocal.abrirRegistro(
       this.nuevoRegistro.content,
-      this.nuevoRegistro.type
+      this.nuevoRegistro.type,
+      this.nuevoRegistro
     );
   }
+
   onDismiss() {
     this.startScanner();
   }

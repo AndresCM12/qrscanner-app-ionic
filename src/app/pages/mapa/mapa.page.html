@@ -1,7 +1,48 @@
 <ion-content mode="ios">
-  <ion-button mode="ios" (click)="goBack()" expand="block" shape="round">
+  <ion-button
+    mode="ios"
+    color="primary"
+    (click)="goBack()"
+    expand="block"
+    shape="round"
+  >
     Cancelar
   </ion-button>
   <!--  -->
-  <div id="map"></div>
+  <ion-spinner name="circular" *ngIf="mapIsLoading"></ion-spinner>
+
+  <ion-modal
+    mode="ios"
+    #modal
+    [initialBreakpoint]="0.5"
+    [breakpoints]="[0, 0.25, 0.5, 0.75]"
+  >
+    <ng-template>
+      <ion-content>
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Your marker</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-list>
+          <ion-list-header>
+            <ion-label>More information</ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-label>Lat: {{lat}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>Long: {{lng}} </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label
+              >Date: {{register.created | date: 'EEEE h:mm a, dd/m/yyyy'}}
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <div id="map" [style.opacity]="mapIsLoading ? '0': '1'"></div>
 </ion-content>
